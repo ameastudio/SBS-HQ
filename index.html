@@ -13,7 +13,16 @@
   <link rel="stylesheet" href="styles-v6.css?v=real-header-fix">
 </head>
 <body>
-  <div id="loginView" class="login-view">
+  <div id="loadingView" class="login-view">
+    <main class="login-card">
+      <img src="spaceboi-logo.png" alt="Shot by Spaceboi" class="login-logo">
+      <p class="eyebrow">PRIVATE STUDIO</p>
+      <h1>SBS <em>HQ.</em></h1>
+      <p class="login-copy">Opening the studio…</p>
+    </main>
+  </div>
+
+  <div id="loginView" class="login-view hidden">
     <main class="login-card">
       <img src="spaceboi-logo.png" alt="Shot by Spaceboi" class="login-logo">
       <p class="eyebrow">PRIVATE STUDIO</p>
@@ -53,6 +62,10 @@
         <section class="content-section">
           <div class="section-heading"><div><p class="eyebrow">NEEDS ATTENTION</p><h3>New Requests</h3></div><button class="text-button" data-go="bookings">VIEW ALL</button></div>
           <div id="homeRequests" class="stack-list"></div>
+        </section>
+        <section class="content-section">
+          <div class="section-heading"><div><p class="eyebrow">CLIENT CHANGES</p><h3>Reschedule / Cancel Requests</h3></div><button class="text-button" data-go="bookings">VIEW BOOKINGS</button></div>
+          <div id="homeClientChanges" class="stack-list"></div>
         </section>
         <section class="content-section">
           <div class="section-heading"><div><p class="eyebrow">PAYMENTS</p><h3>Proofs to Review</h3></div><button class="text-button" data-go="payments">VIEW ALL</button></div>
@@ -274,6 +287,6 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app-v6.js?v=photo-link-fix"></script>
+  <script src="app-v8.js?v=session-client-request-fix"></script>
 </body>
 </html>
