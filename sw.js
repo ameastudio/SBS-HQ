@@ -1,9 +1,9 @@
-const CACHE_NAME = "sbs-hq-v2";
+const CACHE_NAME = "sbs-hq-v3";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css?v=1",
-  "./app-v2.js?v=data-fix",
+  "./app-v3.js?v=client-info-font-fix",
   "./manifest.json",
   "./spaceboi-logo.png"
 ];
