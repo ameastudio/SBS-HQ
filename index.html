@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2d1536">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SBS HQ">
+  <title>SBS HQ</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="spaceboi-logo.png">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <div id="loginView" class="login-view">
+    <div class="login-glow login-glow-a"></div>
+    <div class="login-glow login-glow-b"></div>
+
+    <main class="login-card">
+      <img src="spaceboi-logo.png" alt="Shot by Spaceboi" class="login-logo">
+      <p class="eyebrow">PRIVATE STUDIO</p>
+      <h1>SBS <em>HQ.</em></h1>
+      <p class="login-copy">Bookings, payments and clients — all in one place.</p>
+
+      <form id="loginForm" class="login-form">
+        <label>
+          Email
+          <input id="loginEmail" type="email" autocomplete="email" required>
+        </label>
+        <label>
+          Password
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
+        </label>
+        <p id="loginMessage" class="form-message"></p>
+        <button type="submit" class="gold-button full">SIGN IN</button>
+      </form>
+    </main>
+  </div>
+
+  <div id="appView" class="app-view hidden">
+    <header class="app-header">
+      <div class="header-brand">
+        <img src="spaceboi-logo.png" alt="Shot by Spaceboi">
+      </div>
+      <div class="header-actions">
+        <div class="owner-copy">
+          <span>WELCOME</span>
+          <strong id="ownerName">Spaceboi</strong>
+        </div>
+        <button id="signOutButton" class="icon-button" aria-label="Sign out">↗</button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section class="view active" data-view="home">
+        <div class="hero-card">
+          <p class="eyebrow light">STUDIO OVERVIEW</p>
+          <h2>Good to see you, <span id="heroOwnerName">Spaceboi.</span></h2>
+          <p id="todayLabel">Your studio at a glance.</p>
+        </div>
+
+        <section class="metric-grid">
+          <article class="metric-card">
+            <span>NEW REQUESTS</span>
+            <strong id="metricRequests">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>UPCOMING</span>
+            <strong id="metricUpcoming">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>PROOFS TO REVIEW</span>
+            <strong id="metricPayments">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>THIS MONTH</span>
+            <strong id="metricRevenue">J$0</strong>
+          </article>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">NEEDS ATTENTION</p>
+              <h3>New Booking Requests</h3>
+            </div>
+            <button class="text-button" data-go="bookings">VIEW ALL</button>
+          </div>
+          <div id="homeRequests" class="stack-list"></div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">PAYMENTS</p>
+              <h3>Proofs to Review</h3>
+            </div>
+            <button class="text-button" data-go="payments">VIEW ALL</button>
+          </div>
+          <div id="homePayments" class="stack-list"></div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">COMING UP</p>
+              <h3>Upcoming Shoots</h3>
+            </div>
+          </div>
+          <div id="homeUpcoming" class="stack-list"></div>
+        </section>
+      </section>
+
+      <section class="view" data-view="bookings">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">STUDIO</p>
+            <h2>Bookings</h2>
+          </div>
+          <button id="refreshBookings" class="soft-button">REFRESH</button>
+        </div>
+
+        <div class="filter-row">
+          <button class="filter-chip active" data-booking-filter="all">All</button>
+          <button class="filter-chip" data-booking-filter="requested">Requested</button>
+          <button class="filter-chip" data-booking-filter="confirmed">Confirmed</button>
+          <button class="filter-chip" data-booking-filter="booked">Booked</button>
+          <button class="filter-chip" data-booking-filter="completed">Completed</button>
+        </div>
+
+        <div id="bookingsList" class="stack-list"></div>
+      </section>
+
+      <section class="view" data-view="payments">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">MONEY</p>
+            <h2>Payment Proof</h2>
+          </div>
+          <button id="refreshPayments" class="soft-button">REFRESH</button>
+        </div>
+
+        <div class="filter-row">
+          <button class="filter-chip active" data-payment-filter="submitted">To Review</button>
+          <button class="filter-chip" data-payment-filter="accepted">Accepted</button>
+          <button class="filter-chip" data-payment-filter="rejected">Rejected</button>
+          <button class="filter-chip" data-payment-filter="all">All</button>
+        </div>
+
+        <div id="paymentsList" class="stack-list"></div>
+      </section>
+
+      <section class="view" data-view="calendar">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">SCHEDULE</p>
+            <h2>Calendar</h2>
+          </div>
+        </div>
+
+        <div class="calendar-toolbar">
+          <button id="prevMonth" class="icon-button plum">‹</button>
+          <strong id="calendarMonth">Month</strong>
+          <button id="nextMonth" class="icon-button plum">›</button>
+        </div>
+
+        <div class="calendar-shell">
+          <div class="calendar-weekdays">
+            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+          </div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+        </div>
+
+        <section class="content-section compact-top">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">SELECTED DAY</p>
+              <h3 id="selectedDayTitle">Choose a date</h3>
+            </div>
+          </div>
+          <div id="selectedDayList" class="stack-list"></div>
+        </section>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">BLOCK TIME</p>
+              <h3>Make a slot unavailable</h3>
+            </div>
+          </div>
+          <form id="blockSlotForm" class="panel-form">
+            <div class="form-grid two">
+              <label>Date<input id="blockDate" type="date" required></label>
+              <label>Reason<input id="blockReason" type="text" placeholder="Personal / unavailable"></label>
+              <label>Start<input id="blockStart" type="time" required></label>
+              <label>End<input id="blockEnd" type="time" required></label>
+            </div>
+            <p id="blockMessage" class="form-message"></p>
+            <button type="submit" class="gold-button full">BLOCK TIME</button>
+          </form>
+        </section>
+      </section>
+
+      <section class="view" data-view="clients">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">PEOPLE</p>
+            <h2>Clients</h2>
+          </div>
+        </div>
+        <input id="clientSearch" class="search-input" type="search" placeholder="Search clients">
+        <div id="clientsList" class="stack-list"></div>
+      </section>
+
+      <section class="view" data-view="more">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">STUDIO TOOLS</p>
+            <h2>More</h2>
+          </div>
+        </div>
+
+        <div class="tool-grid">
+          <button class="tool-card" data-go="bookings"><span>01</span><strong>Bookings</strong><small>Confirm, reschedule and manage shoots.</small></button>
+          <button class="tool-card" data-go="payments"><span>02</span><strong>Payments</strong><small>Review deposit and balance proof.</small></button>
+          <button class="tool-card" data-go="calendar"><span>03</span><strong>Calendar</strong><small>See shoots and block unavailable time.</small></button>
+          <button class="tool-card" data-go="clients"><span>04</span><strong>Clients</strong><small>Contact details and booking history.</small></button>
+        </div>
+
+        <div class="coming-card">
+          <p class="eyebrow light">NEXT BUILDS</p>
+          <h3>Packages, website content, photo links & deeper analytics.</h3>
+          <p>The foundation is live first; we’ll add the studio-control tools next.</p>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-nav="home"><span>⌂</span><small>Home</small></button>
+      <button class="nav-item" data-nav="bookings"><span>▤</span><small>Bookings</small></button>
+      <button class="nav-item" data-nav="payments"><span>◫</span><small>Payments</small></button>
+      <button class="nav-item" data-nav="calendar"><span>□</span><small>Calendar</small></button>
+      <button class="nav-item" data-nav="more"><span>•••</span><small>More</small></button>
+    </nav>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden"></div>
+
+  <div id="bookingModal" class="modal-sheet hidden" role="dialog" aria-modal="true">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow">BOOKING</p>
+        <h3 id="modalBookingTitle">Booking</h3>
+      </div>
+      <button class="close-modal" data-close-modal>×</button>
+    </div>
+    <div id="bookingModalContent"></div>
+  </div>
+
+  <div id="paymentModal" class="modal-sheet hidden" role="dialog" aria-modal="true">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow">PAYMENT PROOF</p>
+        <h3 id="modalPaymentTitle">Review Payment</h3>
+      </div>
+      <button class="close-modal" data-close-modal>×</button>
+    </div>
+    <div id="paymentModalContent"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js?v=1"></script>
+</body>
+</html>
