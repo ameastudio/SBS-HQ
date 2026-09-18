@@ -1,15 +1,21 @@
-# SBS HQ
+# SBS HQ Complete
 
-Private PWA for Shot by Spaceboi.
+This build is intended to replace the previous SBS HQ files.
 
-## GitHub Pages
-1. Upload the files in this package to the root of the `SBS-HQ` repository.
-2. Open Settings → Pages.
-3. Source: Deploy from a branch.
-4. Branch: `main`, folder: `/ (root)`.
-5. Save.
+Includes:
+- dashboard + analytics
+- booking confirmation, rescheduling, financials, extras, discounts, photo links
+- manual bookings
+- payment proof review
+- calendar + blocked time
+- clients
+- shoot types + packages/pricing + gallery photos
+- portfolio management
+- review approval
+- website hero/about/contact editing
+- invoices
+- payment instructions
+- PWA support
 
-Expected URL:
-https://ameastudio.github.io/SBS-HQ/
-
-Use the existing Shot by Spaceboi admin account to sign in.
+Run `SBS_HQ_COMPLETE_Supabase.sql` in the Shot by Spaceboi Supabase project first.
+Then replace the HQ repo files with this package.

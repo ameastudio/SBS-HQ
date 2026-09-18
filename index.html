@@ -10,45 +10,30 @@
   <title>SBS HQ</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="spaceboi-logo.png">
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="styles-v4.css?v=complete">
 </head>
 <body>
   <div id="loginView" class="login-view">
-    <div class="login-glow login-glow-a"></div>
-    <div class="login-glow login-glow-b"></div>
-
     <main class="login-card">
       <img src="spaceboi-logo.png" alt="Shot by Spaceboi" class="login-logo">
       <p class="eyebrow">PRIVATE STUDIO</p>
       <h1>SBS <em>HQ.</em></h1>
-      <p class="login-copy">Bookings, payments and clients — all in one place.</p>
-
+      <p class="login-copy">Run the studio without touching Supabase.</p>
       <form id="loginForm" class="login-form">
-        <label>
-          Email
-          <input id="loginEmail" type="email" autocomplete="email" required>
-        </label>
-        <label>
-          Password
-          <input id="loginPassword" type="password" autocomplete="current-password" required>
-        </label>
+        <label>Email<input id="loginEmail" type="email" autocomplete="email" required></label>
+        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" required></label>
         <p id="loginMessage" class="form-message"></p>
-        <button type="submit" class="gold-button full">SIGN IN</button>
+        <button class="gold-button full" type="submit">SIGN IN</button>
       </form>
     </main>
   </div>
 
   <div id="appView" class="app-view hidden">
     <header class="app-header">
-      <div class="header-brand">
-        <img src="spaceboi-logo.png" alt="Shot by Spaceboi">
-      </div>
+      <img src="spaceboi-logo.png" alt="Shot by Spaceboi" class="header-logo">
       <div class="header-actions">
-        <div class="owner-copy">
-          <span>WELCOME</span>
-          <strong id="ownerName">Spaceboi</strong>
-        </div>
-        <button id="signOutButton" class="icon-button" aria-label="Sign out">↗</button>
+        <div class="owner-copy"><span>WELCOME</span><strong>Spaceboi</strong></div>
+        <button id="signOutButton" class="icon-button" title="Sign out">↗</button>
       </div>
     </header>
 
@@ -56,71 +41,34 @@
       <section class="view active" data-view="home">
         <div class="hero-card">
           <p class="eyebrow light">STUDIO OVERVIEW</p>
-          <h2>Good to see you, <span id="heroOwnerName">Spaceboi.</span></h2>
-          <p id="todayLabel">Your studio at a glance.</p>
+          <h2 id="heroGreeting">Good day, <span>Spaceboi.</span></h2>
+          <p id="todayLabel"></p>
         </div>
-
-        <section class="metric-grid">
-          <article class="metric-card">
-            <span>NEW REQUESTS</span>
-            <strong id="metricRequests">0</strong>
-          </article>
-          <article class="metric-card">
-            <span>UPCOMING</span>
-            <strong id="metricUpcoming">0</strong>
-          </article>
-          <article class="metric-card">
-            <span>PROOFS TO REVIEW</span>
-            <strong id="metricPayments">0</strong>
-          </article>
-          <article class="metric-card">
-            <span>THIS MONTH</span>
-            <strong id="metricRevenue">J$0</strong>
-          </article>
-        </section>
-
+        <div class="metric-grid">
+          <article class="metric-card"><span>NEW REQUESTS</span><strong id="metricRequests">0</strong></article>
+          <article class="metric-card"><span>UPCOMING</span><strong id="metricUpcoming">0</strong></article>
+          <article class="metric-card"><span>PROOFS TO REVIEW</span><strong id="metricPayments">0</strong></article>
+          <article class="metric-card"><span>THIS MONTH</span><strong id="metricRevenue">J$0</strong></article>
+        </div>
         <section class="content-section">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">NEEDS ATTENTION</p>
-              <h3>New Booking Requests</h3>
-            </div>
-            <button class="text-button" data-go="bookings">VIEW ALL</button>
-          </div>
+          <div class="section-heading"><div><p class="eyebrow">NEEDS ATTENTION</p><h3>New Requests</h3></div><button class="text-button" data-go="bookings">VIEW ALL</button></div>
           <div id="homeRequests" class="stack-list"></div>
         </section>
-
         <section class="content-section">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">PAYMENTS</p>
-              <h3>Proofs to Review</h3>
-            </div>
-            <button class="text-button" data-go="payments">VIEW ALL</button>
-          </div>
+          <div class="section-heading"><div><p class="eyebrow">PAYMENTS</p><h3>Proofs to Review</h3></div><button class="text-button" data-go="payments">VIEW ALL</button></div>
           <div id="homePayments" class="stack-list"></div>
         </section>
-
         <section class="content-section">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">COMING UP</p>
-              <h3>Upcoming Shoots</h3>
-            </div>
-          </div>
+          <div class="section-heading"><div><p class="eyebrow">COMING UP</p><h3>Upcoming Shoots</h3></div></div>
           <div id="homeUpcoming" class="stack-list"></div>
         </section>
       </section>
 
       <section class="view" data-view="bookings">
         <div class="page-heading">
-          <div>
-            <p class="eyebrow">STUDIO</p>
-            <h2>Bookings</h2>
-          </div>
-          <button id="refreshBookings" class="soft-button">REFRESH</button>
+          <div><p class="eyebrow">STUDIO</p><h2>Bookings</h2></div>
+          <button id="newManualBooking" class="gold-button compact">+ ADD BOOKING</button>
         </div>
-
         <div class="filter-row">
           <button class="filter-chip active" data-booking-filter="all">All</button>
           <button class="filter-chip" data-booking-filter="requested">Requested</button>
@@ -128,110 +76,158 @@
           <button class="filter-chip" data-booking-filter="booked">Booked</button>
           <button class="filter-chip" data-booking-filter="completed">Completed</button>
         </div>
-
         <div id="bookingsList" class="stack-list"></div>
       </section>
 
       <section class="view" data-view="payments">
-        <div class="page-heading">
-          <div>
-            <p class="eyebrow">MONEY</p>
-            <h2>Payment Proof</h2>
-          </div>
-          <button id="refreshPayments" class="soft-button">REFRESH</button>
-        </div>
-
+        <div class="page-heading"><div><p class="eyebrow">MONEY</p><h2>Payments</h2></div></div>
         <div class="filter-row">
           <button class="filter-chip active" data-payment-filter="submitted">To Review</button>
           <button class="filter-chip" data-payment-filter="accepted">Accepted</button>
           <button class="filter-chip" data-payment-filter="rejected">Rejected</button>
           <button class="filter-chip" data-payment-filter="all">All</button>
         </div>
-
         <div id="paymentsList" class="stack-list"></div>
       </section>
 
       <section class="view" data-view="calendar">
-        <div class="page-heading">
-          <div>
-            <p class="eyebrow">SCHEDULE</p>
-            <h2>Calendar</h2>
-          </div>
-        </div>
-
+        <div class="page-heading"><div><p class="eyebrow">SCHEDULE</p><h2>Calendar</h2></div></div>
         <div class="calendar-toolbar">
           <button id="prevMonth" class="icon-button plum">‹</button>
-          <strong id="calendarMonth">Month</strong>
+          <strong id="calendarMonth"></strong>
           <button id="nextMonth" class="icon-button plum">›</button>
         </div>
-
         <div class="calendar-shell">
-          <div class="calendar-weekdays">
-            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
-          </div>
+          <div class="calendar-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
           <div id="calendarGrid" class="calendar-grid"></div>
         </div>
-
         <section class="content-section compact-top">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">SELECTED DAY</p>
-              <h3 id="selectedDayTitle">Choose a date</h3>
-            </div>
-          </div>
+          <div class="section-heading"><div><p class="eyebrow">SELECTED DAY</p><h3 id="selectedDayTitle">Choose a date</h3></div></div>
           <div id="selectedDayList" class="stack-list"></div>
         </section>
-
         <section class="content-section">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">BLOCK TIME</p>
-              <h3>Make a slot unavailable</h3>
-            </div>
-          </div>
+          <div class="section-heading"><div><p class="eyebrow">BLOCK TIME</p><h3>Make a slot unavailable</h3></div></div>
           <form id="blockSlotForm" class="panel-form">
             <div class="form-grid two">
               <label>Date<input id="blockDate" type="date" required></label>
-              <label>Reason<input id="blockReason" type="text" placeholder="Personal / unavailable"></label>
+              <label>Reason<input id="blockReason" type="text" placeholder="Unavailable"></label>
               <label>Start<input id="blockStart" type="time" required></label>
               <label>End<input id="blockEnd" type="time" required></label>
             </div>
             <p id="blockMessage" class="form-message"></p>
-            <button type="submit" class="gold-button full">BLOCK TIME</button>
+            <button class="gold-button full" type="submit">BLOCK TIME</button>
           </form>
         </section>
       </section>
 
       <section class="view" data-view="clients">
-        <div class="page-heading">
-          <div>
-            <p class="eyebrow">PEOPLE</p>
-            <h2>Clients</h2>
-          </div>
-        </div>
-        <input id="clientSearch" class="search-input" type="search" placeholder="Search clients">
+        <div class="page-heading"><div><p class="eyebrow">PEOPLE</p><h2>Clients</h2></div></div>
+        <input id="clientSearch" class="search-input" type="search" placeholder="Search name, email, phone or Instagram">
         <div id="clientsList" class="stack-list"></div>
       </section>
 
-      <section class="view" data-view="more">
-        <div class="page-heading">
-          <div>
-            <p class="eyebrow">STUDIO TOOLS</p>
-            <h2>More</h2>
+      <section class="view" data-view="packages">
+        <div class="page-heading"><div><p class="eyebrow">SERVICES</p><h2>Shoots & Pricing</h2></div></div>
+        <p class="page-note">Edit shoot names, descriptions, photos and package prices here. The public website uses these.</p>
+        <div id="shootTypesList" class="stack-list"></div>
+      </section>
+
+      <section class="view" data-view="portfolio">
+        <div class="page-heading"><div><p class="eyebrow">WEBSITE</p><h2>Portfolio</h2></div></div>
+        <form id="portfolioForm" class="panel-form">
+          <div class="form-grid two">
+            <label>Photo<input id="portfolioFile" type="file" accept="image/*" required></label>
+            <label>Category<input id="portfolioCategory" type="text" placeholder="Portrait / Event"></label>
           </div>
-        </div>
+          <label>Caption<input id="portfolioCaption" type="text" placeholder="Optional"></label>
+          <button class="gold-button full" type="submit">ADD TO PORTFOLIO</button>
+          <p id="portfolioMessage" class="form-message"></p>
+        </form>
+        <div id="portfolioList" class="media-grid"></div>
+      </section>
 
+      <section class="view" data-view="reviews">
+        <div class="page-heading"><div><p class="eyebrow">WEBSITE</p><h2>Reviews</h2></div></div>
+        <div id="reviewsList" class="stack-list"></div>
+      </section>
+
+      <section class="view" data-view="content">
+        <div class="page-heading"><div><p class="eyebrow">WEBSITE</p><h2>Site Content</h2></div></div>
+        <form id="contentForm" class="panel-form">
+          <h3>Homepage Hero</h3>
+          <label>Hero photo<input id="heroImageFile" type="file" accept="image/*"></label>
+          <div id="heroCurrent" class="current-media"></div>
+          <hr>
+          <h3>About</h3>
+          <label>Heading<input id="aboutHeading" type="text"></label>
+          <label>About text<textarea id="aboutBody" rows="5"></textarea></label>
+          <label>Photographer photo<input id="aboutImageFile" type="file" accept="image/*"></label>
+          <div id="aboutCurrent" class="current-media"></div>
+          <hr>
+          <h3>Contact</h3>
+          <div class="form-grid two">
+            <label>Email<input id="contentEmail" type="email"></label>
+            <label>WhatsApp display<input id="contentWhatsapp" type="text"></label>
+            <label>WhatsApp link<input id="contentWhatsappLink" type="url"></label>
+            <label>Location<input id="contentLocation" type="text"></label>
+            <label>Instagram<input id="contentInstagram" type="text"></label>
+            <label>TikTok<input id="contentTiktok" type="text"></label>
+          </div>
+          <button class="gold-button full" type="submit">SAVE WEBSITE CONTENT</button>
+          <p id="contentMessage" class="form-message"></p>
+        </form>
+      </section>
+
+      <section class="view" data-view="analytics">
+        <div class="page-heading"><div><p class="eyebrow">NUMBERS</p><h2>Analytics</h2></div></div>
+        <div class="metric-grid">
+          <article class="metric-card"><span>TOTAL BOOKINGS</span><strong id="analyticsBookings">0</strong></article>
+          <article class="metric-card"><span>COMPLETED</span><strong id="analyticsCompleted">0</strong></article>
+          <article class="metric-card"><span>ALL-TIME PAID</span><strong id="analyticsRevenue">J$0</strong></article>
+          <article class="metric-card"><span>OUTSTANDING</span><strong id="analyticsOutstanding">J$0</strong></article>
+        </div>
+        <section class="content-section">
+          <div class="section-heading"><div><p class="eyebrow">MOST BOOKED</p><h3>Shoot Types</h3></div></div>
+          <div id="analyticsTopShoots" class="stack-list"></div>
+        </section>
+        <section class="content-section">
+          <div class="section-heading"><div><p class="eyebrow">MONTHLY</p><h3>Recent Revenue</h3></div></div>
+          <div id="analyticsMonths" class="stack-list"></div>
+        </section>
+      </section>
+
+      <section class="view" data-view="invoices">
+        <div class="page-heading"><div><p class="eyebrow">MONEY</p><h2>Invoices</h2></div></div>
+        <div id="invoicesList" class="stack-list"></div>
+      </section>
+
+      <section class="view" data-view="settings">
+        <div class="page-heading"><div><p class="eyebrow">BUSINESS</p><h2>Payment Settings</h2></div></div>
+        <form id="paymentSettingsForm" class="panel-form">
+          <label>Heading<input id="paymentHeading" type="text" placeholder="Payment Instructions"></label>
+          <div class="form-grid two">
+            <label>Bank<input id="paymentBank" type="text"></label>
+            <label>Account name<input id="paymentAccountName" type="text"></label>
+            <label>Account number<input id="paymentAccountNumber" type="text"></label>
+            <label>Branch<input id="paymentBranch" type="text"></label>
+          </div>
+          <label>Note<textarea id="paymentNote" rows="4"></textarea></label>
+          <button class="gold-button full" type="submit">SAVE PAYMENT DETAILS</button>
+          <p id="settingsMessage" class="form-message"></p>
+        </form>
+      </section>
+
+      <section class="view" data-view="more">
+        <div class="page-heading"><div><p class="eyebrow">STUDIO TOOLS</p><h2>More</h2></div></div>
         <div class="tool-grid">
-          <button class="tool-card" data-go="bookings"><span>01</span><strong>Bookings</strong><small>Confirm, reschedule and manage shoots.</small></button>
-          <button class="tool-card" data-go="payments"><span>02</span><strong>Payments</strong><small>Review deposit and balance proof.</small></button>
-          <button class="tool-card" data-go="calendar"><span>03</span><strong>Calendar</strong><small>See shoots and block unavailable time.</small></button>
-          <button class="tool-card" data-go="clients"><span>04</span><strong>Clients</strong><small>Contact details and booking history.</small></button>
-        </div>
-
-        <div class="coming-card">
-          <p class="eyebrow light">NEXT BUILDS</p>
-          <h3>Packages, website content, photo links & deeper analytics.</h3>
-          <p>The foundation is live first; we’ll add the studio-control tools next.</p>
+          <button class="tool-card" data-go="clients"><span>01</span><strong>Clients</strong><small>Contact details and booking history.</small></button>
+          <button class="tool-card" data-go="packages"><span>02</span><strong>Shoots & Pricing</strong><small>Packages, photos, prices and descriptions.</small></button>
+          <button class="tool-card" data-go="portfolio"><span>03</span><strong>Portfolio</strong><small>Upload and publish website work.</small></button>
+          <button class="tool-card" data-go="reviews"><span>04</span><strong>Reviews</strong><small>Approve or hide client reviews.</small></button>
+          <button class="tool-card" data-go="content"><span>05</span><strong>Website</strong><small>Hero, About and contact details.</small></button>
+          <button class="tool-card" data-go="analytics"><span>06</span><strong>Analytics</strong><small>Bookings, income and popular shoots.</small></button>
+          <button class="tool-card" data-go="invoices"><span>07</span><strong>Invoices</strong><small>Track issued invoices and balances.</small></button>
+          <button class="tool-card" data-go="settings"><span>08</span><strong>Payment Settings</strong><small>Bank details shown after confirmation.</small></button>
         </div>
       </section>
     </main>
@@ -247,31 +243,37 @@
 
   <div id="modalBackdrop" class="modal-backdrop hidden"></div>
 
-  <div id="bookingModal" class="modal-sheet hidden" role="dialog" aria-modal="true">
+  <section id="bookingModal" class="modal-sheet hidden">
     <div class="modal-handle"></div>
-    <div class="modal-head">
-      <div>
-        <p class="eyebrow">BOOKING</p>
-        <h3 id="modalBookingTitle">Booking</h3>
-      </div>
-      <button class="close-modal" data-close-modal>×</button>
-    </div>
+    <div class="modal-head"><div><p class="eyebrow">BOOKING</p><h3 id="bookingModalTitle">Booking</h3></div><button class="close-modal" data-close-modal>×</button></div>
     <div id="bookingModalContent"></div>
-  </div>
+  </section>
 
-  <div id="paymentModal" class="modal-sheet hidden" role="dialog" aria-modal="true">
+  <section id="paymentModal" class="modal-sheet hidden">
     <div class="modal-handle"></div>
-    <div class="modal-head">
-      <div>
-        <p class="eyebrow">PAYMENT PROOF</p>
-        <h3 id="modalPaymentTitle">Review Payment</h3>
-      </div>
-      <button class="close-modal" data-close-modal>×</button>
-    </div>
+    <div class="modal-head"><div><p class="eyebrow">PAYMENT</p><h3 id="paymentModalTitle">Review</h3></div><button class="close-modal" data-close-modal>×</button></div>
     <div id="paymentModalContent"></div>
-  </div>
+  </section>
+
+  <section id="manualBookingModal" class="modal-sheet hidden">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><div><p class="eyebrow">MANUAL</p><h3>Add Booking</h3></div><button class="close-modal" data-close-modal>×</button></div>
+    <form id="manualBookingForm" class="panel-form modal-form"></form>
+  </section>
+
+  <section id="shootTypeModal" class="modal-sheet hidden">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><div><p class="eyebrow">SHOOT TYPE</p><h3 id="shootTypeModalTitle">Edit Shoot</h3></div><button class="close-modal" data-close-modal>×</button></div>
+    <form id="shootTypeForm" class="panel-form modal-form"></form>
+  </section>
+
+  <section id="packageModal" class="modal-sheet hidden">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><div><p class="eyebrow">PACKAGE</p><h3 id="packageModalTitle">Package</h3></div><button class="close-modal" data-close-modal>×</button></div>
+    <form id="packageForm" class="panel-form modal-form"></form>
+  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app-v3.js?v=client-info-font-fix"></script>
+  <script src="app-v4.js?v=complete"></script>
 </body>
 </html>
