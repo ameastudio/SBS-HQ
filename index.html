@@ -10,7 +10,7 @@
   <title>SBS HQ</title>
   <link rel="manifest" href="manifest.json?v=sbs-hq-icon">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=sbs-hq-icon">
-  <link rel="stylesheet" href="styles-v6.css?v=real-header-fix">
+  <link rel="stylesheet" href="styles-v6.css?v=hero-manager">
 </head>
 <body>
   <div id="loadingView" class="login-view">
@@ -170,6 +170,9 @@
           <h3>Homepage Hero</h3>
           <label>Hero photo<input id="heroImageFile" type="file" accept="image/*"></label>
           <div id="heroCurrent" class="current-media"></div>
+          <div class="hero-media-actions">
+            <button id="removeHeroButton" class="action-danger hero-remove-button hidden" type="button">REMOVE CURRENT HERO</button>
+          </div>
           <hr>
           <h3>About</h3>
           <label>Heading<input id="aboutHeading" type="text"></label>
@@ -287,6 +290,6 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app-v10.js?v=delete-booking"></script>
+  <script src="app-v10.js?v=hero-manager"></script>
 </body>
 </html>

@@ -802,20 +802,62 @@ function renderContentForm(){
   $("#aboutHeading").value=about.heading||"";$("#aboutBody").value=about.body||"";
   $("#contentEmail").value=contact.email||"";$("#contentWhatsapp").value=contact.whatsapp||"";$("#contentWhatsappLink").value=contact.whatsapp_link||"";$("#contentLocation").value=contact.location||"";$("#contentInstagram").value=contact.instagram||"";$("#contentTiktok").value=contact.tiktok||"";
   $("#heroCurrent").innerHTML=hero.image_url?`<img src="${escapeHtml(hero.image_url)}" alt="Current hero">`:"";
+  $("#heroCurrent").classList.toggle("hero-preview",!!hero.image_url);
+  const removeHero=$("#removeHeroButton");if(removeHero)removeHero.classList.toggle("hidden",!hero.image_url);
   $("#aboutCurrent").innerHTML=about.image_url?`<img src="${escapeHtml(about.image_url)}" alt="Current about">`:"";
 }
 async function upsertContent(key,value){const {error}=await sb.from("site_content").upsert({key,value},{onConflict:"key"});if(error)throw error}
+function siteMediaPathFromUrl(url){
+  if(!url)return null;
+  const marker="/storage/v1/object/public/site-media/";
+  const i=String(url).indexOf(marker);
+  if(i<0)return null;
+  try{return decodeURIComponent(String(url).slice(i+marker.length).split("?")[0])}catch{return String(url).slice(i+marker.length).split("?")[0]}
+}
+async function removeSiteMediaUrl(url){
+  const path=siteMediaPathFromUrl(url);if(!path)return;
+  const {error}=await sb.storage.from("site-media").remove([path]);
+  if(error)console.warn("Could not remove old site media:",error);
+}
+function previewHeroSelection(){
+  const file=$("#heroImageFile")?.files?.[0];if(!file)return renderContentForm();
+  const url=URL.createObjectURL(file);
+  $("#heroCurrent").innerHTML=`<img src="${url}" alt="New hero preview">`;
+  $("#heroCurrent").classList.add("hero-preview");
+}
+async function removeCurrentHero(){
+  const hero={...(state.siteContent.hero||{})};
+  const oldUrl=hero.image_url||"";if(!oldUrl)return;
+  if(!confirm("Remove the current homepage hero photo?"))return;
+  const m=$("#contentMessage");m.textContent="Removing hero…";m.className="form-message";
+  try{
+    hero.image_url="";
+    await upsertContent("hero",hero);
+    await removeSiteMediaUrl(oldUrl);
+    if($("#heroImageFile"))$("#heroImageFile").value="";
+    m.textContent="Homepage hero removed.";m.className="form-message success";
+    await refreshAll();
+  }catch(error){m.textContent=error.message;m.className="form-message error"}
+}
 async function saveContent(e){
-  e.preventDefault();const m=$("#contentMessage");m.textContent="Saving…";
+  e.preventDefault();const m=$("#contentMessage");m.textContent="Saving…";m.className="form-message";
+  let uploadedHeroUrl="";
   try{
     const hero={...(state.siteContent.hero||{})},about={...(state.siteContent.about||{})};
-    if($("#heroImageFile").files[0])hero.image_url=await uploadPublic($("#heroImageFile").files[0],"site/hero");
+    const oldHeroUrl=hero.image_url||"";
+    const heroFile=$("#heroImageFile").files[0];
+    if(heroFile){uploadedHeroUrl=await uploadPublic(heroFile,"site/hero");hero.image_url=uploadedHeroUrl}
     if($("#aboutImageFile").files[0])about.image_url=await uploadPublic($("#aboutImageFile").files[0],"site/about");
     about.heading=$("#aboutHeading").value.trim();about.body=$("#aboutBody").value.trim();
     const contact={email:$("#contentEmail").value.trim(),whatsapp:$("#contentWhatsapp").value.trim(),whatsapp_link:$("#contentWhatsappLink").value.trim(),location:$("#contentLocation").value.trim(),instagram:$("#contentInstagram").value.trim(),tiktok:$("#contentTiktok").value.trim()};
     await Promise.all([upsertContent("hero",hero),upsertContent("about",about),upsertContent("contact",contact)]);
-    m.textContent="Website content saved.";m.className="form-message success";await refreshAll();
-  }catch(error){m.textContent=error.message;m.className="form-message error"}
+    if(heroFile&&oldHeroUrl&&oldHeroUrl!==uploadedHeroUrl)await removeSiteMediaUrl(oldHeroUrl);
+    $("#heroImageFile").value="";
+    m.textContent=heroFile?"New homepage hero saved. The old hero was removed.":"Website content saved.";m.className="form-message success";await refreshAll();
+  }catch(error){
+    if(uploadedHeroUrl)await removeSiteMediaUrl(uploadedHeroUrl);
+    m.textContent=error.message;m.className="form-message error"
+  }
 }
 
 /* ---------- analytics/invoices/settings ---------- */
@@ -876,6 +918,8 @@ function bindEvents(){
   $("#packageForm").addEventListener("submit",savePackage);
   $("#portfolioForm").addEventListener("submit",addPortfolio);
   $("#contentForm").addEventListener("submit",saveContent);
+  $("#heroImageFile").addEventListener("change",previewHeroSelection);
+  $("#removeHeroButton").addEventListener("click",removeCurrentHero);
   $("#paymentSettingsForm").addEventListener("submit",saveSettings);
 
   document.addEventListener("click",async e=>{
