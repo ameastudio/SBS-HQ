@@ -10,7 +10,7 @@
   <title>SBS HQ</title>
   <link rel="manifest" href="manifest.json?v=sbs-hq-icon">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=sbs-hq-icon">
-  <link rel="stylesheet" href="styles-v6.css?v=hero-manager">
+  <link rel="stylesheet" href="styles-v7.css?v=large-photo-shoot-options">
 </head>
 <body>
   <div id="loadingView" class="login-view">
@@ -141,7 +141,7 @@
 
       <section class="view" data-view="packages">
         <div class="page-heading"><div><p class="eyebrow">SERVICES</p><h2>Shoots & Pricing</h2></div></div>
-        <p class="page-note">Edit shoot names, descriptions, photos and package prices here. The public website uses these.</p>
+        <p class="page-note">Add or change each shoot photo right from this page, then edit the options and prices clients see.</p>
         <div id="shootTypesList" class="stack-list"></div>
       </section>
 
@@ -169,6 +169,7 @@
         <form id="contentForm" class="panel-form">
           <h3>Homepage Hero</h3>
           <label>Hero photo<input id="heroImageFile" type="file" accept="image/*"></label>
+          <p class="upload-help-hero">High-quality photos up to 50 MB are supported. Very large images are automatically optimized for fast loading while keeping high resolution.</p>
           <div id="heroCurrent" class="current-media"></div>
           <div class="hero-media-actions">
             <button id="removeHeroButton" class="action-danger hero-remove-button hidden" type="button">REMOVE CURRENT HERO</button>
@@ -290,6 +291,6 @@
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app-v10.js?v=hero-manager"></script>
+  <script src="app-v11.js?v=large-photo-shoot-options"></script>
 </body>
 </html>

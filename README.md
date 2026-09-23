@@ -1,21 +1,12 @@
-# SBS HQ Complete
+# SBS HQ — Large Photo + Shoot Options Update
 
-This build is intended to replace the previous SBS HQ files.
+Replace the files in the SBS HQ repository with all files in this folder.
 
-Includes:
-- dashboard + analytics
-- booking confirmation, rescheduling, financials, extras, discounts, photo links
-- manual bookings
-- payment proof review
-- calendar + blocked time
-- clients
-- shoot types + packages/pricing + gallery photos
-- portfolio management
-- review approval
-- website hero/about/contact editing
-- invoices
-- payment instructions
-- PWA support
-
-Run `SBS_HQ_COMPLETE_Supabase.sql` in the Shot by Spaceboi Supabase project first.
-Then replace the HQ repo files with this package.
+Changes:
+- Homepage hero accepts high-quality images up to 50 MB.
+- Oversized images are automatically optimized for web while retaining high resolution.
+- Shoots & Pricing now has an Add/Change Photo control directly on every shoot type.
+- Shoot package/options are clearly visible under each shoot type, including price, duration and photo counts when available.
+- Shoot editor has a cleaner photo gallery picker.
+- Package wording is simplified to “shoot option” in the editor.
+- Cache bumped so the installed PWA receives the changes.
